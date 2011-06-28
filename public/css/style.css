@@ -17,26 +17,16 @@ h1, h2,h3 {
 h1{font-size: 300%}
 h2{margin:1em 0;font-size: 200%}
 
-/*
-	height: 450px;
-	width: 800px;
-
-	height: 563px;
-	width: 1000px;
-
-
-	border: 2px solid #333;
-	height: 337.5px;
-	width: 600px;
-	margin: 4% auto;
-	position: relative;
-	-webkit-border-radius: 12px;
-	box-shadow: 0px 5px 12px #060606;
-*/
 #wrapper{
-	margin: 4% auto;
+	margin: 1% auto 0;
 	position: relative;
 }
+#header{
+	margin:auto;
+	height: 22.225%;
+	width: 100%; 
+}
+
 #geo{
  	position: absolute;
 	bottom: 0;
