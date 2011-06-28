@@ -1,0 +1,13 @@
+module.exports = config = {
+	twitter: {
+		screen_name: 'CHANGE_ME',
+		password: 'CHANGE_ME'
+	},
+	mongodb: {
+		host: '127.0.0.1',
+		port: 27017,
+	},
+	express:{
+		port: 3001
+	}
+}

@@ -1,0 +1,76 @@
+
+html {background: #1C1C1C url(/img/bg.tile.jpg);}
+body {
+	font-family: sans-serif;
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+h1, h2,h3 {
+	color: #333;
+	text-shadow: 0px 1px 2px #eee;
+	opacity: .4;
+	margin:0;
+	padding:0;
+}
+h1{font-size: 300%}
+h2{margin:1em 0;font-size: 200%}
+
+/*
+	height: 450px;
+	width: 800px;
+
+	height: 563px;
+	width: 1000px;
+
+
+	border: 2px solid #333;
+	height: 337.5px;
+	width: 600px;
+	margin: 4% auto;
+	position: relative;
+	-webkit-border-radius: 12px;
+	box-shadow: 0px 5px 12px #060606;
+*/
+#wrapper{
+	margin: 4% auto;
+	position: relative;
+}
+/* 
+#wrapper div{
+	opacity: .3;
+	background: #99c;
+}
+*/
+#timeline{
+	margin:auto;
+	height: 22.225%;
+	width: 100%; 
+}
+#geo{
+ 	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 77.778%;
+	width:43.75%; 
+}
+#sample{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+ 	height: 77.778%;
+	width:56.25%;
+}
+#tw {
+	background: #ccc;
+ 	height: 45%;
+	width: 80%;
+	-webkit-border-radius: 8px;
+	box-shadow: 0px 5px 12px #060606;
+	margin: 20% 4%;
+	text-align: left;
+	padding: 3%;
+}
+#tweet {	
+}

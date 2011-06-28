@@ -3,12 +3,11 @@
  * Module dependencies.
  */
 
-var express = require('express');
+var express = require('express'),
+	config = require('./config/config.js');
 
 var app = module.exports = express.createServer();
-
 // Configuration
-
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
@@ -27,12 +26,11 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', function(req, res){
   res.render('index', {
     title: 'Express'
   });
 });
 
-app.listen(3000);
+app.listen(config.express.port);
 console.log("Express server listening on port %d", app.address().port);
