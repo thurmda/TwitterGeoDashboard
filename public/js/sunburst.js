@@ -37,7 +37,6 @@ d3.json("flare.json", function(json) {
   var toggle = 0;
   setInterval(function(){
 	  toggle = (toggle+1)%2;
-	  console.log(toggle);
 	  if(toggle){
 		    vis.selectAll("path")
 	        .data(repartition(function(d) { return d.value; }))
