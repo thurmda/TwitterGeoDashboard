@@ -23,37 +23,40 @@ var arc = d3.svg.arc()
     .innerRadius(function(d) { return Math.sqrt(d.y); })
     .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 
-d3.json("flare.json", function(json) {
-  vis.data(d3.entries(json)).selectAll("path")
+
+
+//d3.json("flare.json", sunburst);
+
+function sunburst(json) {
+	vis.data(d3.entries(json)).selectAll("path")
       .data(partition)
-    .enter().append("svg:path")
+//      .data(repartition(function(d) { return d.value; }))
+      .enter().append("svg:path")
       .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
       .attr("d", arc)
       .attr("stroke", "hsla(180,40%,20%,.3)")
 //      .attr("fill", function(d) { return color((d.children ? d : d.parent).data.key); })
-      .attr("fill", "hsla(200,140%,60%,.5)")
+      .attr("fill", function(d) {
+    	  console.dir(d);
+    	  var 	hue = 180 + (d.value * 5),
+    	  		sat =  160 + (d.value * 3),
+    	  		alpha = Math.max(.1, .8 - (d.depth*.16));	
+    	  
+    	  return "hsla("+hue+","+ sat +"%,60%,"+alpha+")"})
       .attr("fill-rule", "evenodd");
+	updateSunburst();
+}
+function updateSunburst(json) {
+	if(typeof json !== "undefined"){
+		vis.data(d3.entries(json));
+	}
+   vis.selectAll("path")
+    .data(repartition(function(d) { return d.value; }))
+    .transition()
+    .duration(1500)
+    .attrTween("d", arcTween);
+}
 
-  var toggle = 0;
-  setInterval(function(){
-	  toggle = (toggle+1)%2;
-	  if(toggle){
-		    vis.selectAll("path")
-	        .data(repartition(function(d) { return d.value; }))
-	      .transition()
-	        .duration(1500)
-	        .attrTween("d", arcTween);
-	  }else{
-		    vis.selectAll("path")
-	        .data(repartition(function(d) { return 1; }))
-	      .transition()
-	        .duration(1500)
-	        .attrTween("d", arcTween);
-	  }
-  }, 4000);
-  
-
-});
 
 // Compute a new partition, stashing the old value for transition.
 function repartition(value) {
