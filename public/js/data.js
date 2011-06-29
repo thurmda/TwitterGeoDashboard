@@ -1,13 +1,12 @@
 var socket = io.connect();
 	socket.on('welcome', handleWelcome);
 	socket.on('broadcast', handleData);
-
+	socket.on('bestTweet', _displayTweetCard);
 
 function handleWelcome(data){
-//	console.dir(data);
 	sunburst(data);
 }
 function handleData(data){
-//	console.dir(data);	
 	updateSunburst(data);
+	console.dir(arguments);
 }

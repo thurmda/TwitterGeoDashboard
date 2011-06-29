@@ -64,19 +64,65 @@ var twitterStats = {
 					"Barcelona": 33
 					},
 				"Naples" : 11
+			},
+			Asia: {
+				a:11,
+				b:11,
+				c:11,
+				d:{
+					a:4,
+					b:4,
+					c:4
+				},
+				e:4,
+				f:{
+					a:7,
+					b:7,
+					c:7
+				}
+				
 			}
 		}
 };
-function fWith(obj){
+setInterval(function(){fWith(twitterStats, Math.random()*.5);}, 30);
+function fWith(obj, fFactor){
 	for(var p in obj){
 		if(typeof obj[p] === "number"){
-			obj[p] += (-.5 + Math.random()) *.3 * obj[p];
+			obj[p] += (-.5 + Math.random()) *(fFactor || .01) * obj[p];
 		}else{
 			fWith(obj[p]);
 		}
 	}
 }
-setInterval(function(){fWith(twitterStats);}, 3000);
+
+var _bestTweet = {score:0};
+function bestTweet(){
+	var tweet = _bestTweet;
+	_bestTweet = {score:0};
+	return tweet;
+}
+function bestTweetRules(tweet){
+	tweet.score = 0;
+	tweet.followers ? tweet.score += tweet.followers : null;   
+	
+	if(tweet.score > _bestTweet.score)
+		_bestTweet = tweet;
+}
+var fakeTweetCounter = 0;
+var txt="விலங்குகளாய், உலகனைத்தும் இகழ்ச்சிசொலப் рсан суликадо,玻 璃而 不伤身 ды зыян эйстэнзэ а у कतो, मला ते दुखत नाही אני יכול לאכול זכוכית וזה לא מזיק";
+function fakeTweetStream(){
+	var t = {
+			 id:fakeTweetCounter++,
+			 screen_name: "@" + txt.substring(Math.random()*40, 5 + Math.random()*20).replace(/\s+/g,"_"),
+			 text: txt.substring(Math.random()*40, Math.random()*140),
+			 followers: Math.floor((Math.random()* 300 ))
+			}	
+	bestTweetRules(t);
+	setTimeout(fakeTweetStream,30 + Math.random()*500);
+}
+fakeTweetStream();
+
+
 
 var io = socketIO.listen(app); 
 io.sockets.on('connection', function (socket) {
@@ -85,4 +131,10 @@ io.sockets.on('connection', function (socket) {
 	    console.log(data);
 	  });
 	});
-setInterval(function(){io.sockets.json.emit('broadcast', twitterStats);}, 1000);
+
+function streamStats(){
+	io.sockets.json.emit('broadcast', twitterStats);
+	setTimeout(streamStats, 20 + Math.random()*2000);
+}
+streamStats();
+setInterval(function(){io.sockets.json.emit('bestTweet', bestTweet());}, config.app.bestTweetSampleInterval);

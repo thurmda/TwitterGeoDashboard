@@ -3,8 +3,11 @@
 	var _cardMarkup =	""+
 		"<h1>{{html screen_name}}</h1>" +
 		"{{if image}}<img src='${image}'/>{{/if}}"+
-		"<h2>{{html text}}</h2>";
+		"<h2>{{html text}}</h2>"+
+		"<h3>${ followers} followers</h3>";
 	$.template("card" , _cardMarkup);
+	
+	
 	
 	var _displayTweetCard = function(tweet){
 				var DOM  = $.tmpl( "card" , [tweet] );
@@ -19,10 +22,9 @@
 	});
 
 	
-	setInterval(function(){
-	_displayTweetCard({
-		screen_name: "@thurmda",
-		text: "Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum t"
-	});
-	
-	}, 5000);
+//	setInterval(function(){
+//	_displayTweetCard({
+//		screen_name: "@thurmda",
+//		text: "Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum tweet Lorem ipsum t"
+//		});
+//	}, 5000);

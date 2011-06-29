@@ -40,7 +40,7 @@ function sunburst(json) {
     	  console.dir(d);
     	  var 	hue = 180 + (d.value * 5),
     	  		sat =  160 + (d.value * 3),
-    	  		alpha = Math.max(.1, .8 - (d.depth*.16));	
+    	  		alpha = Math.max(.04, .7 - (d.depth*.19));	
     	  
     	  return "hsla("+hue+","+ sat +"%,60%,"+alpha+")"})
       .attr("fill-rule", "evenodd");
@@ -53,7 +53,7 @@ function updateSunburst(json) {
    vis.selectAll("path")
     .data(repartition(function(d) { return d.value; }))
     .transition()
-    .duration(1500)
+    .duration(200)
     .attrTween("d", arcTween);
 }
 
