@@ -8,7 +8,7 @@ var container = document.getElementById( 'geo' ),
 var vis = d3.select("#geo").append("svg:svg")
     .attr("width", w)
     .attr("height", h)
-  .append("svg:g")
+    .append("svg:g") 
     .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
 
 var partition = d3.layout.partition()
@@ -24,37 +24,57 @@ var arc = d3.svg.arc()
     .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 
 
+var arcs, p, t;
 
 //d3.json("flare.json", sunburst);
 
 function sunburst(json) {
-	vis.data(d3.entries(json)).selectAll("path")
-      .data(partition)
-//      .data(repartition(function(d) { return d.value; }))
-      .enter().append("svg:path")
-      .attr("display", function(d) { return d.depth ? null : "none"; }) // hide inner ring
+	arcs = vis.data(d3.entries(json)).selectAll("g")
+    		    .data(partition)
+			    .enter().append("svg:g")
+			    .attr("class", "arc")
+	
+	p = arcs.append("svg:path")
+      .attr("display", function(d) { 
+//    	  if(!d.depth)return "none";
+    	  return d.depth ? null : "none"; 
+
+//    	  return d.value > 10 ? null : "none"; 
+    	  }) // hide inner ring
       .attr("d", arc)
       .attr("stroke", "hsla(180,40%,20%,.3)")
-//      .attr("fill", function(d) { return color((d.children ? d : d.parent).data.key); })
-      .attr("fill", function(d) {
-    	  console.dir(d);
-    	  var 	hue = 180 + (d.value * 5),
+      .attr("fill", function(d, i ) {
+//    	  console.dir(d);
+    	  var 	hue = Math.min(230, 70 + (d.value * 5) + (i*9)),
     	  		sat =  160 + (d.value * 3),
-    	  		alpha = Math.max(.04, .7 - (d.depth*.19));	
+    	  		alpha = Math.max(.04, .9 - (d.depth*.19));	
     	  
     	  return "hsla("+hue+","+ sat +"%,60%,"+alpha+")"})
       .attr("fill-rule", "evenodd");
-	updateSunburst();
+	
+	t = arcs.append("svg:text")
+		 .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+		 .attr("fill", "hsla(180,20%,20%,.8)")
+		 .attr("text-anchor", "middle")
+     	 .text(function(d, i) {return d.data.key});	
+	
+	setTimeout(updateSunburst, 3000);
 }
 function updateSunburst(json) {
 	if(typeof json !== "undefined"){
 		vis.data(d3.entries(json));
 	}
-   vis.selectAll("path")
-    .data(repartition(function(d) { return d.value; }))
-    .transition()
-    .duration(200)
-    .attrTween("d", arcTween);
+	  p.data(repartition(function(d) { 
+		  return d.value; }))
+	    .transition()
+	    .duration(200)
+	    .attrTween("d", arcTween);
+
+	  t.data(repartition(function(d) { return d.value; }))
+	    .transition()
+	    .duration(200)
+		.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+
 }
 
 

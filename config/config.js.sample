@@ -9,5 +9,9 @@ module.exports = config = {
 	},
 	express:{
 		port: 3001
+	},
+	app: {
+		bestTweetSampleInterval: 8000,
+		statsInterval: 300
 	}
 }
