@@ -6,6 +6,7 @@
 var express = require('express'),
 	socketIO = require('socket.io'),
 //	mongodb = require('mongodb'),
+	TwitterNode = require('twitter-node').TwitterNode,
 	config = require('./config/config.js');
 
 var app = module.exports = express.createServer();
@@ -36,6 +37,15 @@ app.get('/', function(req, res){
 
 app.listen(config.express.port);
 console.log("Express server listening on port %d", app.address().port);
+
+
+
+
+
+
+
+
+
 
 
 var twitterStats = {
@@ -102,25 +112,32 @@ function bestTweet(){
 	return tweet;
 }
 function bestTweetRules(tweet){
-	tweet.score = 0;
-	tweet.followers ? tweet.score += tweet.followers : null;   
+	var score = 0;
+	tweet.user.followers_count ? score += tweet.user.followers_count : null;   
 	
-	if(tweet.score > _bestTweet.score)
-		_bestTweet = tweet;
+	if(score > _bestTweet.score){
+		_bestTweet = {
+			score: score,
+			screen_name: "@" + tweet.user.screen_name,
+			avatar: tweet.user.profile_image_url,
+			text: tweet.text,
+			followers :tweet.user.followers_count
+		}
+	}
 }
-var fakeTweetCounter = 0;
-var txt="விலங்குகளாய், உலகனைத்தும் இகழ்ச்சிசொலப் рсан суликадо,玻 璃而 不伤身 ды зыян эйстэнзэ а у कतो, मला ते दुखत नाही אני יכול לאכול זכוכית וזה לא מזיק";
-function fakeTweetStream(){
-	var t = {
-			 id:fakeTweetCounter++,
-			 screen_name: "@" + txt.substring(Math.random()*40, 5 + Math.random()*20).replace(/\s+/g,"_"),
-			 text: txt.substring(Math.random()*40, Math.random()*140),
-			 followers: Math.floor((Math.random()* 300 ))
-			}	
-	bestTweetRules(t);
-	setTimeout(fakeTweetStream,30 + Math.random()*500);
-}
-fakeTweetStream();
+//var fakeTweetCounter = 0;
+//var txt="à®µà®¿à®²à®™à¯�à®•à¯�à®•à®³à®¾à®¯à¯�, à®‰à®²à®•à®©à¯ˆà®¤à¯�à®¤à¯�à®®à¯� à®‡à®•à®´à¯�à®šà¯�à®šà®¿à®šà¯Šà®²à®ªà¯� Ñ€Ñ�Ð°Ð½ Ñ�ÑƒÐ»Ð¸ÐºÐ°Ð´Ð¾,çŽ» ç’ƒè€Œ ä¸�ä¼¤èº« Ð´Ñ‹ Ð·Ñ‹Ñ�Ð½ Ñ�Ð¹Ñ�Ñ‚Ñ�Ð½Ð·Ñ� Ð° Ñƒ à¤•à¤¤à¥‹, à¤®à¤²à¤¾ à¤¤à¥‡ à¤¦à¥�à¤–à¤¤ à¤¨à¤¾à¤¹à¥€ ×�× ×™ ×™×›×•×œ ×œ×�×›×•×œ ×–×›×•×›×™×ª ×•×–×” ×œ×� ×ž×–×™×§";
+//function fakeTweetStream(){
+//	var t = {
+//			 id:fakeTweetCounter++,
+//			 screen_name: "@" + txt.substring(Math.random()*40, 5 + Math.random()*20).replace(/\s+/g,"_"),
+//			 text: txt.substring(Math.random()*40, Math.random()*140),
+//			 followers: Math.floor((Math.random()* 300 ))
+//			}	
+//	bestTweetRules(t);
+//	setTimeout(fakeTweetStream,30 + Math.random()*500);
+//}
+//fakeTweetStream();
 
 
 
@@ -131,10 +148,30 @@ io.sockets.on('connection', function (socket) {
 	    console.log(data);
 	  });
 	});
-
 function streamStats(){
 	io.sockets.json.emit('broadcast', twitterStats);
 	setTimeout(streamStats, 20 + Math.random()*2000);
 }
 streamStats();
 setInterval(function(){io.sockets.json.emit('bestTweet', bestTweet());}, config.app.bestTweetSampleInterval);
+
+
+function processTweet (tweet){
+	console.dir(tweet);
+	bestTweetRules(tweet);
+}
+stream = new TwitterNode({
+	  user: config.twitter.screen_name, 
+	  password: config.twitter.password,
+	  locations: [-90.834961,29.954935,  -64.599609,47.487513] //New Orleans to Maine
+	})
+	  .addListener('error', function(error) {
+		console.log(error.message);
+	  })
+	  .addListener('tweet', processTweet)
+	  .addListener('end', function(resp) {
+		  console.log("Twitter Stream ended... " + resp.statusCode);
+	  })
+	  .stream();
+setInterval(function(){io.sockets.json.emit('stats', stream.stats());}, config.app.statsInterval);
+
