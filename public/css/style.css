@@ -18,6 +18,12 @@ h1{font-size: 300%}
 h2{margin:1em 0 .2em;font-size: 200%}
 h3{font-size: 140%}
 sub{font-size: 40%}
+/*
+SVG
+*/
+path {
+	stroke: hsla(180,40%,20%,.3);
+	}
 
 text{
 	font-size: 70%;
@@ -71,6 +77,12 @@ text{
 }
 #tweet {
 	overflow:hidden;
+}
+.geo{
+	position:absolute;
+	bottom:0;
+	left:0;
+	margin: 1em;
 }
 
 .followers {

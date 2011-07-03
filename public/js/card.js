@@ -1,10 +1,12 @@
 var _cardMarkup =	"<img class='avatar' src='${avatar}' />"+
 	"<h1 class='user'>{{html screen_name}}</h1>" +
 	"<h2>{{html text}}</h2>"+
+	"<h3 class='geo'>${geo.hash}</h3>"+
 	"<h3 class='followers'>${ followers} followers</h3>";
 $.template("card" , _cardMarkup);
 
 var _displayTweetCard = function(tweet){
+console.dir(tweet);
 			var DOM  = $.tmpl( "card" , [tweet] );
 			$("#tweet").fadeOut(800, function(){
 				$("#tweet").html(DOM);
