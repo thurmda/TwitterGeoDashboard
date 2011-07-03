@@ -1,10 +1,18 @@
 {
-    "name": "application-name"
+    "name": "TwitterGeoDashboard"
+  , "description" : "A real-time visual display of the geographic distribution of Tweets" 
+  , "author": "thurmda"
+  , "main" : "app.js"
   , "version": "0.0.1"
+  , "repository" :
+     { "type" : "git"
+     , "url" : "http://github.com/thurmda/TwitterGeoDashboard.git"
+     }
   , "private": true
   , "dependencies": {
       "express": "2.3.11"
     , "ejs": ">= 0.0.1"
     , "socket.io": ">= 0.7.2"
+    , "twitter-node" : "https://github.com/thurmda/twitter-node/tarball/v0.0.2"
   }
 }

@@ -6,7 +6,7 @@
 var express = require('express'),
 	socketIO = require('socket.io'),
 //	mongodb = require('mongodb'),
-	TwitterNode = require('twitter-node').TwitterNode,
+	TwitterNode = require('twitter-node-fork').TwitterNode,
 	config = require('./config/config.js');
 
 var app = module.exports = express.createServer();
