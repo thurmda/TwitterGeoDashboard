@@ -20,7 +20,7 @@ h3{font-size: 140%}
 sub{font-size: 40%}
 
 text{
-	font-size: 70%;
+	font-size: 50%;
 	stroke-width:0;
 	}
 
@@ -42,20 +42,23 @@ text{
 	margin: 0 .4em 0 0;
 	opacity: 0.7;
 }
-
-#geo{
- 	position: absolute;
-	top: 20%;
-	left: 0;
+/*
 	height: 77.778%;
 	width:43.75%; 
+*/
+#geo{
+ 	position: absolute;
+	top: 10%;
+	left: 0;
+	height: 93.336%;
+	width:55%; 
 }
 #sample{
 	position: absolute;
-	top: 15%;
+	top: 10%;
 	right: 0;
  	height: 77.778%;
-	width:56.25%;
+	width:52.5%;
 }
 #tw {
 	background: #ccc;
