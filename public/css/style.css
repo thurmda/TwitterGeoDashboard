@@ -48,10 +48,15 @@ text{
 */
 #geo{
  	position: absolute;
-	top: 10%;
+	top: 5%;
 	left: 0;
 	height: 93.336%;
 	width:55%; 
+}
+#globe{
+	position:absolute;
+	top: 20%;
+	left: 20%;
 }
 #sample{
 	position: absolute;
