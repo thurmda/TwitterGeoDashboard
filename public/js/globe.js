@@ -125,7 +125,7 @@
 
 //                camera.position.x += ( mouseX - camera.position.x ) * 0.05;
 //                camera.position.y += ( - mouseY - camera.position.y ) *0.8;
-//                earth.rotation.y += .02;
+                earth.rotation.y += .02;
                 renderer.render( scene, camera );
                 renderer.render( sceneAtmosphere, camera );
             }

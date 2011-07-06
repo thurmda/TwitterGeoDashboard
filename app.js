@@ -6,7 +6,6 @@ var express = require('express'),
 	twitter = require('./lib/twitter'),
 //	twitter = require('./lib/twitterMock'),
 	web = require('./lib/express');
-
 	
 var app = web.initApp(express,config);
 var io = socketIO.listen(app); 

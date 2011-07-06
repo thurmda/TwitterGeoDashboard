@@ -33,13 +33,15 @@ function getSize(){
 function byId(d){
 	var id = (d.data) ? d.data.value._id :undefined;
 	return id;};
-var creatingSunburst = false;
+	var creatingSunburst = false;
+	var updatingSunburst = false;
 function sunburst(json) {
 	creatingSunburst = true;
 	d3.select("#geo svg").remove();
     w = container.offsetWidth;
     h = container.offsetHeight;
-    r = .9 * Math.min(w, h) / 2;
+    wh = Math.min(w, h);
+    r = .89 * wh / 2;
     partition = d3.layout.partition()
     .sort(null)
     .size(getSize())
@@ -52,10 +54,10 @@ function sunburst(json) {
     .value(function(d) { return 1; });
     
 	vis = d3.select("#geo").append("svg:svg")
-	    .attr("width", w)
-	    .attr("height", h)
+	    .attr("width", wh)
+	    .attr("height", wh)
 	    .append("svg:g") 
-	    .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");	
+	    .attr("transform", "translate(" + wh / 2 + "," + wh / 2 + ")");	
 	
 	arcs = vis.data(d3.entries(json)).selectAll("g")
     		    .data(partition,byId)
@@ -134,6 +136,8 @@ function sunburst(json) {
 //	setTimeout(updateSunburst, 3000);
 }
 function updateSunburst(json) {
+	updatingSunburst = true;
+	setTimeout(function(){updatingSunburst=false},4800);
 	if(creatingSunburst) return;
 	
 	if(typeof json !== "undefined"){

@@ -5,7 +5,7 @@ $(window).resize(_sizeToFit);
 
 var resizeCountDown;
 function _sizeToFit (){
-	var ww = window.innerWidth * .95,
+	var ww = window.innerWidth * .98,
 		wh = ww * 9 / 16;
 
 
@@ -20,8 +20,8 @@ function _sizeToFit (){
 		"</style>");	
 	resizeCountDown  = setTimeout(function(){
 		if(typeof latestGeo !=="undefined")
-			init();
-			animate();
+//			init();
+//			animate();
 			sunburst(latestGeo);
 		},100);
 };
