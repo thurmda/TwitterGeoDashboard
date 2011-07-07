@@ -79,6 +79,8 @@ function sunburst(json) {
 	    	  		alpha = Math.max(.04, .9 - (d.depth*.22));	
 	    	  if (d.data && d.data.key && d.data.key=="other")
 	    		  alpha  = alpha *.2;
+	    	  if (d.depth && d.depth > 2)
+	    		  alpha  = alpha *.2;
 	    	  return "hsla("+hue+","+ sat +"%,60%,"+alpha+")"});
 	
 	t[0] = arcs.append("svg:text")
@@ -155,6 +157,8 @@ function updateSunburst(json) {
 	    	  		sat =  160 + (d.value * 3),
 	    	  		alpha = Math.max(.04, .9 - (d.depth*.22));	
 	    	  if (d.data && d.data.key && d.data.key=="other")
+	    		  alpha  = alpha *.2;
+	    	  if (d.depth && d.depth > 2)
 	    		  alpha  = alpha *.2;
 	    	  return "hsla("+hue+","+ sat +"%,60%,"+alpha+")"});
 
