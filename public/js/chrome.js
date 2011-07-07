@@ -20,8 +20,10 @@ function _sizeToFit (){
 		"</style>");	
 	resizeCountDown  = setTimeout(function(){
 		if(typeof latestGeo !=="undefined")
-//			init();
-//			animate();
+			if(init && animate){
+				init();
+				animate();
+			}
 			sunburst(latestGeo);
 		},100);
 };
