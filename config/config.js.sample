@@ -16,6 +16,6 @@ module.exports = config = {
 		bestTweetSampleInterval: 8000,
 		statsInterval: 300,
 		geoStatsInterval: 3000,
-		statRefreshInterval : 1000 * 20
+		statRefreshInterval : 1000 * 60 * 20
 	}
 }
