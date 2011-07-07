@@ -56,16 +56,17 @@
             init();
             animate();
             function init() {
+            	$('canvas').remove();
                 container = document.getElementById( 'geo' );
-                w = container.offsetWidth || window.innerWidth;
-                h = container.offsetHeight || window.innerHeight;
+                w = container.offsetWidth  *.6;
+                h = container.offsetHeight *.6;
                 camera = new THREE.Camera( 60, 1, 1, 10000 );
                 camera.position.z = 800;
                 camera.position.y = 400;
                 scene = new THREE.Scene();
                 sceneAtmosphere = new THREE.Scene();
 
-                var geometry = new THREE.Sphere(200, 40, 30);
+                var geometry = new THREE.Sphere(290, 40, 30);
 
                 shader = Shaders['earth'];
                 uniforms = THREE.UniformsUtils.clone(shader.uniforms);
@@ -103,7 +104,7 @@
                 renderer.setClearColorHex(0x000000, 0.0);
                 renderer.setSize(w,h);
 
-                renderer.domElement.style.position = 'absolute';
+                renderer.domElement.id = 'globe';
 
                 container.appendChild(renderer.domElement);
                 
@@ -121,6 +122,7 @@
             }
 
             function render() {
+
 //                camera.position.x += ( mouseX - camera.position.x ) * 0.05;
 //                camera.position.y += ( - mouseY - camera.position.y ) *0.8;
                 earth.rotation.y += .02;

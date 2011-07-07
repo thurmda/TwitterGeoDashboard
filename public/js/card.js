@@ -18,6 +18,11 @@ var _statsMarkup =	""+
 "<span class='stat'>{{html perSecond.toString().substring(0,4)}}<sub>/sec</sub></span>";
 $.template("stats" , _statsMarkup);
 
+var ttt = 0;
+function getTTT(){
+	return ttt;
+}
 var _displayStats = function(stats){
+	ttt = stats.total;
 	$("#stats").html($.tmpl( "stats" , [stats] ));
 }

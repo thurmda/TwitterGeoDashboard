@@ -11,7 +11,11 @@ module.exports = config = {
 		port: 3001
 	},
 	app: {
+		title: 'Twitter Geo Dashboard',
+		geoBoundingBox: [-180, -85, 180, 85],
 		bestTweetSampleInterval: 8000,
-		statsInterval: 300
+		statsInterval: 300,
+		geoStatsInterval: 3000,
+		statRefreshInterval : 1000 * 20
 	}
 }
